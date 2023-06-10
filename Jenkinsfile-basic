@@ -24,6 +24,8 @@ pipeline {
                 script {
                     echo "Deploying the application..."
                     echo "$JOB_NAME"
+                    echo "$BUILD_ID"
+                    echo "$EXECUTOR_NUMBER"
                 }
             }
         }
