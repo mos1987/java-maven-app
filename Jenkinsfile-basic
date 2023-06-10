@@ -15,7 +15,6 @@ pipeline {
             steps {
                 script {
                     echo "Testing the application..."
-                    echo "$EXECUTOR_NUMBER"
                 }
             }
         }
@@ -25,7 +24,6 @@ pipeline {
                     echo "Deploying the application..."
                     echo "$JOB_NAME"
                     echo "$BUILD_ID"
-                    echo "$EXECUTOR_NUMBER"
                 }
             }
         }
