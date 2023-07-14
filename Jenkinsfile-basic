@@ -1,5 +1,6 @@
 pipeline{
     agent any
+    
     stages{
         stage ('Pull Code from GutHub'){
             steps{
@@ -21,7 +22,6 @@ pipeline{
             steps{
                 sh '''
                    docker build -t bagrat92/java-maven-app:${BUILD_ID} .
-                   docker push bagrat92/java-maven-app:${BUILD_ID}
                 '''
             }
         }
