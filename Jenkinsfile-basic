@@ -27,7 +27,7 @@ pipeline{
             steps{
                 script {
                     // Build the Docker image
-                        docker.build registry + ":$BUILD_NUMBER"
+                        docker.build registry + ":${BUILD_NUMBER}"
 
                     // Push the Docker image to DockerHub
                         docker.withRegistry( '', registryCredential ) {
