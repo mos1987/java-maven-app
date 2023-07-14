@@ -4,8 +4,6 @@ pipeline{
     environment {
 
         registry = "bagrat92/java-maven-app"
-        registryCredential = 'bagrat92'
-        dockerImage = ''
     
     }
 
@@ -28,17 +26,16 @@ pipeline{
         }
         stage('Building image'){
             steps{
-                script {
-                    dockerImage = docker.build "${registry}" + ":$BUILD_ID"
-                }
+                sh '''
+                  docker build -t ${registry}:${BUILD_ID} .
+                '''
             }
         }
-        stage('Deploy Image'){
-            steps{
-                script {
-                    docker.withRegistry( '', registryCredential ){
-                    dockerImage.push()
-                    }
+        stage('Docker Push'){
+         steps {
+            withCredentials([usernamePassword(credentialsId: 'bagrat92', passwordVariable: 'dockerHubPassword', usernameVariable: 'dockerHubUser')]) {
+                sh "docker login -u ${env.dockerHubUser} -p ${env.dockerHubPassword}"
+                sh 'docker push ${registry}:${BUILD_ID}'
                 }
             }
         }
