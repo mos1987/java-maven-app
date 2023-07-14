@@ -23,13 +23,13 @@ pipeline{
                 script {
                     docker.withRegistry('https://registry.hub.docker.com/', 'bagrat92') {
                         def imageName = "bagrat92/java-maven-app:${BUILD_ID}"
-                        def dockerfile = "."
+                        def dockerfile = "./"
 
                     // Build the Docker image
                         docker.build(imageName, "-f ${dockerfile} .")
 
                     // Push the Docker image to DockerHub
-                        docker.withRegistry('', 'bagrat92') {
+                        docker.withRegistry('bagrat92') {
                         docker.image(imageName).push()
                         }
                     }
