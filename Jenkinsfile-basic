@@ -32,12 +32,14 @@ pipeline{
             }
         }
         stage('Docker Push'){
-         steps {
-            withCredentials([usernamePassword(credentialsId: 'bagrat92', passwordVariable: 'dockerHubPassword', usernameVariable: 'dockerHubUser')]) {
-                sh "docker login -u ${env.dockerHubUser} -p ${env.dockerHubPassword}"
-                sh 'docker push ${registry}:${BUILD_ID}'
+            steps {
+                withCredentials(
+                    [usernamePassword
+                        (credentialsId: 'bagrat92', passwordVariable: 'dockerHubPassword', usernameVariable: 'dockerHubUser')]) {
+                        sh "docker login -u ${env.dockerHubUser} -p ${env.dockerHubPassword}"
+                        sh 'docker push ${registry}:${BUILD_ID}'
+                    }
                 }
-            }
         }
     }
 }
