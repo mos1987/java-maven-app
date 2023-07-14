@@ -1,6 +1,11 @@
 pipeline{
     agent any
 
+    environment {
+    registry = "bagrat92/java-maven-app"
+    registryCredential = 'bagrat92'
+    }
+
     stages{
         stage ('Pull Code from GutHub'){
             steps{
@@ -21,17 +26,12 @@ pipeline{
         stage ('Build and Push Docker Images'){
             steps{
                 script {
-                    docker.withRegistry('https://registry.hub.docker.com/', 'bagrat92') {
-                        def imageName = "bagrat92/java-maven-app:${BUILD_ID}"
-                        def dockerfile = "./"
-
                     // Build the Docker image
-                        docker.build(imageName, "-f ${dockerfile} .")
+                        docker.build registry + ":$BUILD_NUMBER"
 
                     // Push the Docker image to DockerHub
-                        docker.withRegistry('bagrat92') {
-                        docker.image(imageName).push()
-                        }
+                        docker.withRegistry( '', registryCredential ) {
+                        dockerImage.push()
                     }
                 }
             }
