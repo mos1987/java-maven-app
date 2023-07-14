@@ -16,6 +16,14 @@ pipeline{
                   mvn package
                 '''
             }
-        } 
+        }
+        stage ('Build and Push Docker Images'){
+            steps{
+                sh '''
+                   docker build -t bagrat92/java-maven-app:${BUILD_ID} .
+                   docker push bagrat92/java-maven-app:${BUILD_ID}
+                '''
+            }
+        }
     }
 }
