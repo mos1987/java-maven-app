@@ -5,6 +5,7 @@ pipeline{
 
         registry = "bagrat92/java-maven-app"
         registryCredential = 'bagrat92'
+        dockerImage = ''
     
     }
 
