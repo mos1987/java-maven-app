@@ -1,31 +1,23 @@
-#!/usr/bin/env groovy
-
-pipeline {
-    agent none
-    stages {
-        stage('build') {
-            steps {
-                script {
-                    echo "Building the application..."
-                    echo "$BUILD_ID"
-                }
+pipeline{
+    agent any
+    stages{
+        stage ('Build Code'){
+            steps{
+                sh '''
+                  ls -lah
+                  mvn --version
+                '''
             }
         }
-        stage('test') {
-            steps {
-                script {
-                    echo "Testing the application..."
-                }
-            }
+    post{
+        always{
+            echo "========always========"
         }
-        stage('deploy') {
-            steps {
-                script {
-                    echo "Deploying the application..."
-                    echo "$JOB_NAME"
-                    echo "$BUILD_ID"
-                }
-            }
+        success{
+            echo "========pipeline executed successfully ========"
+        }
+        failure{
+            echo "========pipeline execution failed========"
         }
     }
 }
