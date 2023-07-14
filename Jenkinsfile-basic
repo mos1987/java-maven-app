@@ -1,7 +1,7 @@
 pipeline{
     agent any
     stages{
-        stage ('Build Code'){
+        stage ('Pull Code from GutHub'){
             steps{
                 sh '''
                   ls -lah
@@ -9,5 +9,13 @@ pipeline{
                 '''
             }
         }
+        stage ('Package and Test Code'){
+            steps{
+                sh '''
+                  mvn test
+                  mvn package
+                '''
+            }
+        } 
     }
 }
