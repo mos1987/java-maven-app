@@ -1,6 +1,6 @@
 pipeline{
     agent any
-    
+
     stages{
         stage ('Pull Code from GutHub'){
             steps{
@@ -20,10 +20,20 @@ pipeline{
         }
         stage ('Build and Push Docker Images'){
             steps{
-                sh '''
-                   docker build -t bagrat92/java-maven-app:${BUILD_ID} .
-                '''
+                script {
+                    docker.withRegistry('https://registry.hub.docker.com/', 'bagrat92') {
+                        def imageName = "bagrat92/java-maven-app:${BUILD_ID}"
+                        def dockerfile = "."
+
+                    // Build the Docker image
+                        docker.build(imageName, "-f ${dockerfile} .")
+
+                    // Push the Docker image to DockerHub
+                        docker.withRegistry('', 'bagrat92') {
+                        docker.image(imageName).push()
+                        }
+                    }
+                }
             }
         }
-    }
 }
