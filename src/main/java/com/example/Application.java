@@ -18,7 +18,7 @@ public class Application {
     public void init()
     {
         Logger log = LoggerFactory.getLogger(Application.class);
-        log.info("Java app started in my server");
+        log.info("Java app started in my Server");
     }
 
     public String getStatus() {
