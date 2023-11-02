@@ -21,8 +21,10 @@ pipeline{
                 withCredentials(
                     [usernamePassword
                         (credentialsId: 'dockerhub', passwordVariable: 'dockerHubPassword', usernameVariable: 'dockerHubUser')]) {
-                        sh "docker login -u ${env.dockerHubUser} -p ${env.dockerHubPassword'}"
-                        sh 'docker push mos87/java-maven-app:${BUILD_ID}'
+                        sh '''
+                           docker login -u ${env.dockerHubUser} -p ${env.dockerHubPassword'}
+                           docker push mos87/java-maven-app:${BUILD_ID}'
+                        '''
                     }
                 }
         }        
