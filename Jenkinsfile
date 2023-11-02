@@ -9,5 +9,12 @@ pipeline{
                 '''
             }
         }
+        stage ('Build Docker Image'){
+            steps{
+                sh '''
+                   docker build -t mos87/java-maven-app:${BUILD_ID} .
+                '''
+            }
+        }
     }
 }    
