@@ -1,21 +1,6 @@
 pipeline{
     agent any
-
-    environment {
-
-        registry = "bagrat92/java-maven-app"
-    
-    }
-
     stages{
-        stage ('Pull Code from GutHub'){
-            steps{
-                sh '''
-                  ls -lah
-                  mvn --version
-                '''
-            }
-        }
         stage ('Package and Test Code'){
             steps{
                 sh '''
@@ -24,22 +9,5 @@ pipeline{
                 '''
             }
         }
-        stage('Building image'){
-            steps{
-                sh '''
-                  docker build -t ${registry}:${BUILD_ID} .
-                '''
-            }
-        }
-        stage('Docker Push'){
-            steps {
-                withCredentials(
-                    [usernamePassword
-                        (credentialsId: 'bagrat92', passwordVariable: 'dockerHubPassword', usernameVariable: 'dockerHubUser')]) {
-                        sh "docker login -u ${env.dockerHubUser} -p ${env.dockerHubPassword}"
-                        sh 'docker push ${registry}:${BUILD_ID}'
-                    }
-                }
-        }
     }
-}
+}    
