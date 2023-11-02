@@ -20,9 +20,9 @@ pipeline{
             steps {
                 withCredentials(
                     [usernamePassword
-                        (credentialsId: 'dockerhub', passwordVariable: 'dockerhubpassword', usernameVariable: 'dockerhubusername')]) {
-                        sh "docker login -u ${env.dockerhubusername} -p ${env.dockerhubpassword'}"
-                        sh "docker push mos87/java-maven-app:${BUILD_ID}"
+                        (credentialsId: 'dockerhub', passwordVariable: 'dockerHubPassword', usernameVariable: 'dockerHubUser')]) {
+                        sh "docker login -u ${env.dockerHubUser} -p ${env.dockerHubPassword'}"
+                        sh 'docker push mos87/java-maven-app:${BUILD_ID}'
                     }
                 }
         }        
